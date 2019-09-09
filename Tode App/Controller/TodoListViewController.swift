@@ -1,20 +1,19 @@
-
-
 import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    var itemArrsy = ["Find mlik", "Buy Eggs", "Buy Coca"]
+    var itemArrsy = [Item]()
     
-    let defaults = UserDefaults.standard
+     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("item.plist")
+    
+//    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    
+        loadItem()
         
-        if let item = defaults.array(forKey: "TodoListArray") as? [String] {
-            itemArrsy = item 
-        }
     }
 
     //Mark - Tableview Datasource Method
@@ -27,7 +26,11 @@ class TodoListViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
         
-        cell.textLabel?.text = itemArrsy[indexPath.row]
+        let item = itemArrsy[indexPath.row]
+        
+        cell.textLabel?.text = item.title
+        
+        cell.accessoryType =   item.done ? .checkmark : .none
         
         return cell
     }
@@ -37,18 +40,11 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(indexPath.row, itemArrsy[indexPath.row])
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-            
-        } else {
-            
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            
-        }
+        itemArrsy[indexPath.row].done = !itemArrsy[indexPath.row].done
+        
+        saveItem()
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
         
     }
     
@@ -63,11 +59,15 @@ class TodoListViewController: UITableViewController {
             // What happen once the user clcik the Add Item button
             
             print("Success")
-            self.itemArrsy.append(textField.text!)
             
-            self.defaults.set(self.itemArrsy, forKey: "TodoListArray")
+            let newItem = Item()
             
-            self.tableView.reloadData()
+            newItem.title = textField.text!
+            
+            self.itemArrsy.append(newItem)
+            
+            self.saveItem()
+            
         }
         
         alert.addTextField { (alertTextField) in
@@ -81,6 +81,29 @@ class TodoListViewController: UITableViewController {
         
         present(alert, animated: true, completion: nil)
     }
-
+    
+    func saveItem(){
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(itemArrsy)
+            
+            try data.write(to: dataFilePath!)
+            
+        } catch {
+            print("Error encoding item array \(error)")
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func loadItem(){
+        if let data = try? Data(contentsOf: dataFilePath!){
+         let decoder = PropertyListDecoder()
+            do {
+                itemArrsy = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error decode item Array \(error)")
+            }
+        }
+    }
 }
-
