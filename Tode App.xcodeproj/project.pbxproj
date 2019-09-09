@@ -44,7 +44,6 @@
 			children = (
 				51EE7C622324FE5B00431B34 /* Default-568h@2x.png */,
 				51139DB423238D4000FED237 /* Tode App */,
-				51139DC123238D4300FED237 /* Info.plist */,
 				51139DB323238D4000FED237 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +59,7 @@
 		51139DB423238D4000FED237 /* Tode App */ = {
 			isa = PBXGroup;
 			children = (
+				51139DC123238D4300FED237 /* Info.plist */,
 				51EE7C5F2324F7D100431B34 /* Controller */,
 				51EE7C602324F7F300431B34 /* View */,
 				51EE7C5B2324F6CC00431B34 /* Data Model */,
