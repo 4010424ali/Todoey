@@ -5,19 +5,23 @@ class TodoListViewController: UITableViewController {
  
     var itemArrsy = [Item]()
     
+    var selectCategory: Category? {
+        didSet {
+            loadItem()
+        }
+    }
+    
     // create the link app delegate
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
    
     
-//    let defaults = UserDefaults.standard
+    //  let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("item.plist") ?? "")
-        loadItem()
-        
     }
 
     //Mark - Tableview Datasource Method
@@ -39,8 +43,7 @@ class TodoListViewController: UITableViewController {
         return cell
     }
     
-    //Mark - TableView Delegate method
-    
+    //MARK: - TableView Delegate method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         itemArrsy[indexPath.row].done = !itemArrsy[indexPath.row].done
@@ -56,23 +59,21 @@ class TodoListViewController: UITableViewController {
         
     }
     
-    //Mark - Add New Item
-    
-    
+    //MARK: - Add New Item
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Todey Item", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             // What happen once the user clcik the Add Item button
-            
-            print("Success")
-            
-            
+ 
             let newItem = Item(context: self.context)
             
             newItem.titile = textField.text!
+            
             newItem.done = false
+            
+            newItem.parentCategory = self.selectCategory
             
             self.itemArrsy.append(newItem)
             
@@ -106,12 +107,56 @@ class TodoListViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadItem(){
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+    func loadItem(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
+     
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+            
+        } else {
+            
+            request.predicate = categoryPredicate
+            
+        }
+        
         do {
+            
           itemArrsy =  try context.fetch(request)
+            
         } catch {
+            
             print("Error fetching data from content \(error)")
+            
+        }
+        
+        tableView.reloadData()
+    }
+}
+
+
+//MARK: - SearchBar functionality
+extension TodoListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        let request :NSFetchRequest<Item> = Item.fetchRequest()
+        
+        let predicate = NSPredicate(format: "titile CONTAINS[cd] %@", searchBar.text!)
+        
+        request.sortDescriptors  = [NSSortDescriptor(key: "titile", ascending: true)]
+        
+        loadItem(with : request, predicate: predicate)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItem()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
         }
     }
 }
