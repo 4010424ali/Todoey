@@ -15,6 +15,7 @@
 		511AEE9523266B76000AA257 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 511AEE9323266B76000AA257 /* DataModel.xcdatamodeld */; };
 		514307F32327D93400AAEABB /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514307F22327D93400AAEABB /* CategoryViewController.swift */; };
 		51EE7C632324FE5B00431B34 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 51EE7C622324FE5B00431B34 /* Default-568h@2x.png */; };
+		757F49E9804F6C12913DA015 /* Pods_Tode_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61E5183B64E356119EAD428D /* Pods_Tode_App.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,9 @@
 		511AEE9423266B76000AA257 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		514307F22327D93400AAEABB /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		51EE7C622324FE5B00431B34 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		61E5183B64E356119EAD428D /* Pods_Tode_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tode_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		859ACAA93B0EE8F0C9D8CF10 /* Pods-Tode App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tode App.debug.xcconfig"; path = "Target Support Files/Pods-Tode App/Pods-Tode App.debug.xcconfig"; sourceTree = "<group>"; };
+		C40FC07454FD8A4D3800CCAF /* Pods-Tode App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tode App.release.xcconfig"; path = "Target Support Files/Pods-Tode App/Pods-Tode App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,18 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				757F49E9804F6C12913DA015 /* Pods_Tode_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3447F9A913D0174889987D95 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61E5183B64E356119EAD428D /* Pods_Tode_App.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		51139DA923238D3F00FED237 = {
 			isa = PBXGroup;
 			children = (
 				51EE7C622324FE5B00431B34 /* Default-568h@2x.png */,
 				51139DB423238D4000FED237 /* Tode App */,
 				51139DB323238D4000FED237 /* Products */,
+				FE63832668AFC0B2852254D0 /* Pods */,
+				3447F9A913D0174889987D95 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +112,16 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		FE63832668AFC0B2852254D0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				859ACAA93B0EE8F0C9D8CF10 /* Pods-Tode App.debug.xcconfig */,
+				C40FC07454FD8A4D3800CCAF /* Pods-Tode App.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -104,9 +129,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 51139DC423238D4300FED237 /* Build configuration list for PBXNativeTarget "Tode App" */;
 			buildPhases = (
+				6754AC68F6843CCA573611E7 /* [CP] Check Pods Manifest.lock */,
 				51139DAE23238D4000FED237 /* Sources */,
 				51139DAF23238D4000FED237 /* Frameworks */,
 				51139DB023238D4000FED237 /* Resources */,
+				992BB82B06D8CD11CEB1ACC3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -163,6 +190,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6754AC68F6843CCA573611E7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Tode App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		992BB82B06D8CD11CEB1ACC3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tode App/Pods-Tode App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tode App/Pods-Tode App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tode App/Pods-Tode App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		51139DAE23238D4000FED237 /* Sources */ = {
@@ -316,6 +385,7 @@
 		};
 		51139DC523238D4300FED237 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 859ACAA93B0EE8F0C9D8CF10 /* Pods-Tode App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -333,6 +403,7 @@
 		};
 		51139DC623238D4300FED237 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C40FC07454FD8A4D3800CCAF /* Pods-Tode App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
