@@ -1,5 +1,6 @@
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -12,7 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // find the path of the where our is living the system 
         //print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
-        
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
+  
+        do {
+            
+           let _ = try Realm()
+            
+        } catch {
+            
+            print("Error initialising new realm, \(error) ")
+            
+        }
         return true
     }
 
