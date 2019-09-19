@@ -1,6 +1,6 @@
 import UIKit
 import RealmSwift
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
  
     var todoItems: Results<Item>?
     
@@ -20,7 +20,6 @@ class TodoListViewController: UITableViewController {
         // Do any additional setup after loading the view.
 //        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("item.plist") ?? "")
         
-        
     }
 
     //Mark - Tableview Datasource Method
@@ -31,7 +30,7 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if  let item = todoItems?[indexPath.row]{
         
@@ -124,6 +123,19 @@ class TodoListViewController: UITableViewController {
         todoItems = selectCategory?.items.sorted(byKeyPath: "title", ascending: true)
        
         tableView.reloadData()
+    }
+    
+    //MARK - DeleteData from Swip
+    override func updateModal(at indexPath: IndexPath){
+        if let categoryForDelete = self.todoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryForDelete)
+                }
+            } catch {
+                print("Error deleting category, \(error) ")
+            }
+        }
     }
 }
 
